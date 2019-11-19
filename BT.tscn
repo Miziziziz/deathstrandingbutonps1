@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://models/bt_line.glb" type="PackedScene" id=1]
+[ext_resource path="res://models/bt_body.tres" type="Material" id=2]
+[ext_resource path="res://models/bt.glb" type="PackedScene" id=3]
+
+[node name="BT" type="Spatial"]
+
+[node name="Line" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.623331, -0.781958, -2.33042e-08, 0.40121, 0.319821, 0.858338, -0.671185, -0.535029, 0.513084, 0, 1.51833, 0 )
+
+[node name="Cube" parent="Line" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.994083, 0 )
+material/0 = ExtResource( 2 )
+
+[node name="Line2" parent="." instance=ExtResource( 1 )]
+transform = Transform( -0.163526, -0.807065, -0.567367, 0.506177, -0.562277, 0.653934, -0.846784, -0.180253, 0.500465, -1.50807, 2.13513, -1.03185 )
+
+[node name="Cube" parent="Line2" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.994083, 0 )
+material/0 = ExtResource( 2 )
+
+[node name="Line3" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.388974, -0.844734, -0.367591, 0.748506, 0.0571743, 0.660659, -0.537065, -0.532123, 0.654528, -3.09253, 1.03124, -1.38573 )
+
+[node name="Cube" parent="Line3" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.994083, 0 )
+material/0 = ExtResource( 2 )
+
+[node name="Body" parent="." instance=ExtResource( 3 )]
+
+[node name="BT" parent="Body/Armature" index="0"]
+material/0 = ExtResource( 2 )
+
+[node name="AnimationPlayer" parent="Body" index="2"]
+autoplay = "float_loop"
+
+[editable path="Line"]
+
+[editable path="Line2"]
+
+[editable path="Line3"]
+
+[editable path="Body"]
