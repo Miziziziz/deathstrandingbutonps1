@@ -1,14 +1,13 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=2]
 
-[ext_resource path="res://models/noise.png" type="Texture" id=1]
+[ext_resource path="res://models/rock.jpg" type="Texture" id=1]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type spatial; 
-render_mode skip_vertex_transform, cull_disabled;
+render_mode skip_vertex_transform;
 
 uniform vec4 color : hint_color;
 uniform sampler2D albedoTex : hint_albedo;
-uniform float alpha_scissor_threshold;
 uniform float specular_intensity : hint_range(0, 1);
 uniform float resolution = 256;
 uniform float cull_distance = 5;
@@ -36,14 +35,11 @@ void fragment() {
 	
 	ALBEDO = tex.rgb * color.rgb;
 	SPECULAR = specular_intensity;
-	ALPHA = tex.a;
-	ALPHA_SCISSOR = alpha_scissor_threshold;
 }"
 
 [resource]
 shader = SubResource( 1 )
-shader_param/color = Color( 0.0313726, 0.0470588, 0.109804, 1 )
-shader_param/alpha_scissor_threshold = 0.62
+shader_param/color = Color( 1, 1, 1, 1 )
 shader_param/specular_intensity = null
 shader_param/resolution = 256.0
 shader_param/cull_distance = 30.0

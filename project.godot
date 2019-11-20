@@ -19,6 +19,11 @@ config/name="Ps1DeathStranding"
 run/main_scene="res://World.tscn"
 config/icon="res://icon.png"
 
+[display]
+
+window/size/width=320
+window/size/height=240
+
 [input]
 
 exit={

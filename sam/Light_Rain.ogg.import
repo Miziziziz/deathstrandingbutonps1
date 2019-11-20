@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Light_Rain.ogg-6c7793b79cdfa480ffa16f76f8d322ca.oggstr"
+
+[deps]
+
+source_file="res://sam/Light_Rain.ogg"
+dest_files=[ "res://.import/Light_Rain.ogg-6c7793b79cdfa480ffa16f76f8d322ca.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

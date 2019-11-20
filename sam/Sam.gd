@@ -3,6 +3,7 @@ extends KinematicBody
 var move_speed = 2.0
 onready var anim = $"Graphics/AnimationPlayer"
 func _physics_process(delta):
+	return
 	var move_vec = Vector3()
 	move_vec.z = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
 	move_vec.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")

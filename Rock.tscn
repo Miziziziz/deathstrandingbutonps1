@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://models/rock.glb" type="PackedScene" id=1]
+[ext_resource path="res://models/rock_mat.tres" type="Material" id=2]
+
+[node name="Rock" type="Spatial"]
+
+[node name="rock" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.445204, 0, 0, 0, 0.445204, 0, 0, 0, 0.445204, 0, 0, 0 )
+
+[node name="Cube" parent="rock" index="0"]
+material/0 = ExtResource( 2 )
+
+[editable path="rock"]

@@ -1,27 +1,392 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://BT.tscn" type="PackedScene" id=1]
-[ext_resource path="res://sam/Sam.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Ground.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Rock.tscn" type="PackedScene" id=2]
+[ext_resource path="res://BtAppearTrigger.gd" type="Script" id=3]
+[ext_resource path="res://BT.tscn" type="PackedScene" id=4]
+[ext_resource path="res://sam/Sam.tscn" type="PackedScene" id=5]
+[ext_resource path="res://sam/Backpack.tscn" type="PackedScene" id=6]
+[ext_resource path="res://sam/Light_Rain.ogg" type="AudioStream" id=7]
 
-[sub_resource type="CubeMesh" id=1]
+[sub_resource type="SphereShape" id=7]
 
-[sub_resource type="ConcavePolygonShape" id=2]
-data = PoolVector3Array( -1, 1, 1, 1, 1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, -1, 1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, -1, 1, -1, -1, 1, -1, 1, -1, 1, -1, -1, 1, 1, -1, -1, -1, -1, 1, 1, -1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1, -1, -1, -1, 1, 1, -1, 1, -1, -1, -1, 1, -1, 1, 1, -1, -1, -1, -1, -1 )
+[sub_resource type="Animation" id=8]
+resource_name = "show_bts"
+
+[sub_resource type="Animation" id=10]
+resource_name = "spin"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 54.583, -180, 0 ), Vector3( 54.583, -180, 360 ) ]
+}
+
+[sub_resource type="ParticlesMaterial" id=4]
+emission_shape = 2
+emission_box_extents = Vector3( 10, 10, 1 )
+spread = 0.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 20.0
+angular_velocity = 0.0
+
+[sub_resource type="SpatialMaterial" id=6]
+params_billboard_mode = 2
+albedo_color = Color( 0.356863, 0.419608, 0.486275, 1 )
+
+[sub_resource type="PlaneMesh" id=5]
+material = SubResource( 6 )
+size = Vector2( 0.07, 0.7 )
+
+[sub_resource type="Animation" id=9]
+resource_name = "falldowncliff"
+length = 8.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( -14.194, 4.74812, -1.17053 ), Vector3( -54.756, -14.3168, -1.171 ) ]
+}
+
+[sub_resource type="Environment" id=3]
+background_mode = 1
+background_color = Color( 0.627451, 0.686275, 0.745098, 1 )
+ambient_light_color = Color( 1, 1, 1, 1 )
+fog_enabled = true
+fog_color = Color( 0.627451, 0.686275, 0.745098, 1 )
+fog_depth_begin = 4.0
+fog_depth_end = 15.0
 
 [node name="World" type="Spatial"]
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
+[node name="ground" type="Spatial" parent="."]
 editor/display_folded = true
-transform = Transform( 4.628, 0, 0, 0, 0.125786, 0, 0, 0, 4.628, 0, 0, 0 )
-mesh = SubResource( 1 )
-material/0 = null
 
-[node name="StaticBody" type="StaticBody" parent="MeshInstance"]
+[node name="Ground" parent="ground" instance=ExtResource( 1 )]
 
-[node name="CollisionShape" type="CollisionShape" parent="MeshInstance/StaticBody"]
-shape = SubResource( 2 )
+[node name="Ground12" parent="ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16 )
 
-[node name="BT" parent="." instance=ExtResource( 1 )]
+[node name="Ground4" parent="ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0 )
 
-[node name="Sam" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.68498, 0, 1.05682 )
+[node name="Ground10" parent="ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 16 )
+
+[node name="Ground6" parent="ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0 )
+
+[node name="Ground11" parent="ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 16 )
+
+[node name="Ground2" parent="ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8 )
+
+[node name="Ground7" parent="ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8 )
+
+[node name="Ground3" parent="ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -8 )
+
+[node name="Ground9" parent="ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 8 )
+
+[node name="Ground5" parent="ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -8 )
+
+[node name="Ground8" parent="ground" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 8 )
+
+[node name="Rock" parent="ground" instance=ExtResource( 2 )]
+
+[node name="Rock6" parent="ground" instance=ExtResource( 2 )]
+transform = Transform( 0.16841, 0, 0.985717, 0, 1, 0, -0.985717, 0, 0.16841, 2.2278, 4.76837e-07, 8.14327 )
+
+[node name="Rock9" parent="ground" instance=ExtResource( 2 )]
+transform = Transform( 0.16841, 0, 0.985717, 0, 1, 0, -0.985717, 0, 0.16841, -4.7722, 4.76837e-07, -3.85673 )
+
+[node name="Rock7" parent="ground" instance=ExtResource( 2 )]
+transform = Transform( -0.231253, 0.161543, 0.797418, 0.0301061, -0.826736, 0.176213, 0.813059, 0.076559, 0.220279, 1.66651, 0.413563, 9.38179 )
+
+[node name="Rock8" parent="ground" instance=ExtResource( 2 )]
+transform = Transform( 0.338549, 0.149505, 0.64359, 0.0264246, -0.725641, 0.154665, 0.660198, -0.047622, -0.336222, 5.95379, 0.413563, 5.24395 )
+
+[node name="Rock2" parent="ground" instance=ExtResource( 2 )]
+transform = Transform( -0.589104, 0, -0.808057, 0, 1, 0, 0.808057, 0, -0.589104, 3.5836, 0, 0.813912 )
+
+[node name="Rock3" parent="ground" instance=ExtResource( 2 )]
+transform = Transform( -0.508816, 0, 0.525622, 0, 0.731555, 0, -0.525622, 0, -0.508816, 2.02465, 0, 0.811242 )
+
+[node name="Rock4" parent="ground" instance=ExtResource( 2 )]
+transform = Transform( -0.415272, 0, -0.602264, 0, 0.731555, 0, 0.602264, 0, -0.415272, -3.97535, 0, 5.81124 )
+
+[node name="Rock5" parent="ground" instance=ExtResource( 2 )]
+transform = Transform( 0.614326, 0, -0.103235, 0, 0.62294, 0, 0.103235, 0, 0.614326, -4.03561, -4.76837e-07, 4.15946 )
+
+[node name="ground2" type="Spatial" parent="."]
+editor/display_folded = true
+transform = Transform( 0.906308, -0.422618, 0, 0.422618, 0.906308, 0, 0, 0, 1, -24, 0, 0 )
+
+[node name="Ground" parent="ground2" instance=ExtResource( 1 )]
+
+[node name="Ground12" parent="ground2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16 )
+
+[node name="Ground4" parent="ground2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0 )
+
+[node name="Ground10" parent="ground2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 16 )
+
+[node name="Ground6" parent="ground2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0 )
+
+[node name="Ground11" parent="ground2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 16 )
+
+[node name="Ground2" parent="ground2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8 )
+
+[node name="Ground7" parent="ground2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8 )
+
+[node name="Ground3" parent="ground2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -8 )
+
+[node name="Ground9" parent="ground2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 8 )
+
+[node name="Ground5" parent="ground2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -8 )
+
+[node name="Ground8" parent="ground2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 8 )
+
+[node name="Rock" parent="ground2" instance=ExtResource( 2 )]
+transform = Transform( 0.90421, 0.427089, 0, -0.427089, 0.90421, 0, 0, 0, 1, 0, 0, 2.13088 )
+
+[node name="Rock18" parent="ground2" instance=ExtResource( 2 )]
+transform = Transform( -0.898137, 0.418189, -0.135909, 0.413359, 0.908361, 0.0633753, 0.149957, 0.000740564, -0.988692, -1.15218, 0.0849485, 2.13088 )
+
+[node name="Rock6" parent="ground2" instance=ExtResource( 2 )]
+transform = Transform( 0.16841, 0, 0.985717, 0, 1, 0, -0.985717, 0, 0.16841, 2.2278, 4.76837e-07, 8.14327 )
+
+[node name="Rock9" parent="ground2" instance=ExtResource( 2 )]
+transform = Transform( 0.16841, 0, 0.985717, 0, 1, 0, -0.985717, 0, 0.16841, -6.23178, 0, -5.99248 )
+
+[node name="Rock14" parent="ground2" instance=ExtResource( 2 )]
+transform = Transform( -0.244509, 0.650324, 1.25096, 0.447265, 1.23983, -0.557117, -1.33708, 0.295812, -0.415121, -7.86959, 0.513825, -4.87637 )
+
+[node name="Rock15" parent="ground2" instance=ExtResource( 2 )]
+transform = Transform( -1.94009, 1.47559, 0.292321, 1.4764, 1.95925, -0.0913357, -0.288193, 0.103621, -2.43577, -9.05442, -1.21475, -5.40717 )
+
+[node name="Rock16" parent="ground2" instance=ExtResource( 2 )]
+transform = Transform( -0.918805, 1.20334, 3.33487, 1.00017, 2.0862, -1.5101, -2.26404, 0.502626, -0.805139, -5.16545, -0.974182, 2.60627 )
+
+[node name="Rock17" parent="ground2" instance=ExtResource( 2 )]
+transform = Transform( 1.10179, 0.355554, 0.889937, -0.185995, 1.35197, -0.389199, -1.02107, 0.187946, 1.91695, -7.94479, -0.668114, 2.60627 )
+
+[node name="Rock7" parent="ground2" instance=ExtResource( 2 )]
+transform = Transform( -0.231253, 0.161543, 0.797418, 0.0301061, -0.826736, 0.176213, 0.813059, 0.076559, 0.220279, 1.66651, 0.413563, 9.38179 )
+
+[node name="Rock8" parent="ground2" instance=ExtResource( 2 )]
+transform = Transform( 0.338549, 0.149505, 0.64359, 0.0264246, -0.725641, 0.154665, 0.660198, -0.047622, -0.336222, 5.95379, 0.413563, 5.24395 )
+
+[node name="Rock2" parent="ground2" instance=ExtResource( 2 )]
+transform = Transform( 0.0122786, 0.562023, -0.827031, -0.420757, 0.753209, 0.505609, 0.90709, 0.341771, 0.245723, 2.97583, -0.0553551, 0.813911 )
+
+[node name="Rock3" parent="ground2" instance=ExtResource( 2 )]
+transform = Transform( -0.508816, 0, 0.525622, 0, 0.731555, -1.49012e-08, -0.525622, 0, -0.508816, 1.98977, -0.0748005, 0.811242 )
+
+[node name="Rock10" parent="ground2" instance=ExtResource( 2 )]
+transform = Transform( 0.391661, 0, 0.617879, 0, 0.731555, -1.49012e-08, -0.617879, -1.07065e-08, 0.391661, 5.2024, 1.90735e-06, -4.91138 )
+
+[node name="Rock11" parent="ground2" instance=ExtResource( 2 )]
+transform = Transform( 0.367891, 2.98023e-08, -0.63232, -1.49012e-08, 0.731555, 1.49012e-08, 0.63232, -2.17823e-09, 0.367891, 9.92901, 1.90735e-06, -3.79587 )
+
+[node name="Rock12" parent="ground2" instance=ExtResource( 2 )]
+transform = Transform( 0.367891, 2.98023e-08, -0.63232, -2.98023e-08, 0.731555, -1.49012e-08, 0.63232, -2.17823e-09, 0.367891, -4.10942, 4.76837e-06, -5.43694 )
+
+[node name="Rock13" parent="ground2" instance=ExtResource( 2 )]
+transform = Transform( 0.367891, 2.98023e-08, -0.632321, 1.49012e-08, 0.731555, -2.98023e-08, 0.63232, -2.17823e-09, 0.367891, -9.87392, 1.14441e-05, 2.36376 )
+
+[node name="Rock4" parent="ground2" instance=ExtResource( 2 )]
+transform = Transform( -0.415272, 0, -0.602264, 0, 0.731555, 0, 0.602264, 0, -0.415272, -3.97535, 0, 5.81124 )
+
+[node name="Rock5" parent="ground2" instance=ExtResource( 2 )]
+transform = Transform( 0.614326, 0, -0.103235, 0, 0.62294, 0, 0.103235, 0, 0.614326, -4.03561, -4.76837e-07, 4.15946 )
+
+[node name="ground3" type="Spatial" parent="."]
+editor/display_folded = true
+transform = Transform( 0.906308, -0.422618, 0, 0.422618, 0.906308, 0, 0, 0, 1, -45.7514, -10.1428, 0 )
+
+[node name="Ground" parent="ground3" instance=ExtResource( 1 )]
+
+[node name="Ground12" parent="ground3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16 )
+
+[node name="Ground4" parent="ground3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0 )
+
+[node name="Ground10" parent="ground3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 16 )
+
+[node name="Ground6" parent="ground3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0 )
+
+[node name="Ground11" parent="ground3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 16 )
+
+[node name="Ground2" parent="ground3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8 )
+
+[node name="Ground7" parent="ground3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8 )
+
+[node name="Ground3" parent="ground3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -8 )
+
+[node name="Ground9" parent="ground3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 8 )
+
+[node name="Ground5" parent="ground3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -8 )
+
+[node name="Ground8" parent="ground3" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 8 )
+
+[node name="Rock" parent="ground3" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.06567 )
+
+[node name="Rock6" parent="ground3" instance=ExtResource( 2 )]
+transform = Transform( 0.16841, 0, 0.985717, 0, 1, 0, -0.985717, 0, 0.16841, 2.2278, 4.76837e-07, 8.14327 )
+
+[node name="Rock9" parent="ground3" instance=ExtResource( 2 )]
+transform = Transform( 0.16841, 0, 0.985717, 0, 1, 0, -0.985717, 0, 0.16841, -6.23178, 0, -5.99248 )
+
+[node name="Rock7" parent="ground3" instance=ExtResource( 2 )]
+transform = Transform( -0.231253, 0.161543, 0.797418, 0.0301061, -0.826736, 0.176213, 0.813059, 0.076559, 0.220279, 1.66651, 0.413563, 9.38179 )
+
+[node name="Rock8" parent="ground3" instance=ExtResource( 2 )]
+transform = Transform( 0.338549, 0.149505, 0.64359, 0.0264246, -0.725641, 0.154665, 0.660198, -0.047622, -0.336222, 5.95379, 0.413563, 5.24395 )
+
+[node name="Rock2" parent="ground3" instance=ExtResource( 2 )]
+transform = Transform( -0.589104, 0, -0.808057, 0, 1, 0, 0.808057, 0, -0.589104, 3.5836, 0, 0.813912 )
+
+[node name="Rock3" parent="ground3" instance=ExtResource( 2 )]
+transform = Transform( -0.508816, 0, 0.525622, 0, 0.731555, 0, -0.525622, 0, -0.508816, 2.02465, 0, 0.811242 )
+
+[node name="Rock10" parent="ground3" instance=ExtResource( 2 )]
+transform = Transform( 0.391661, 2.98023e-08, 0.617879, -1.49012e-08, 0.731555, 1.49012e-08, -0.617879, -1.07065e-08, 0.391661, 5.32919, -0.178463, -5.19094 )
+
+[node name="Rock16" parent="ground3" instance=ExtResource( 2 )]
+transform = Transform( 0.246004, 0.617498, 1.70163, 0.248445, 1.33267, -0.813131, -1.46587, 0.329602, 0.0923123, 6.79575, -0.349926, -4.91138 )
+
+[node name="Rock11" parent="ground3" instance=ExtResource( 2 )]
+transform = Transform( 0.367891, 2.98023e-08, -0.63232, -1.49012e-08, 0.731555, 1.49012e-08, 0.63232, -2.17823e-09, 0.367891, 9.92901, 1.90735e-06, -3.79587 )
+
+[node name="Rock14" parent="ground3" instance=ExtResource( 2 )]
+transform = Transform( 0.668468, 0.236624, 0.139808, -0.142223, 0.612424, -0.356506, -0.23518, 0.302213, 0.61298, 9.27003, -0.2834, -4.20236 )
+
+[node name="Rock15" parent="ground3" instance=ExtResource( 2 )]
+transform = Transform( -0.451076, 0.525826, 0.205972, 0.379829, 0.477567, -0.387359, -0.417908, -0.133507, -0.574382, 5.87611, -0.000667572, -4.20236 )
+
+[node name="Rock12" parent="ground3" instance=ExtResource( 2 )]
+transform = Transform( 0.367891, 2.98023e-08, -0.63232, -2.98023e-08, 0.731555, -1.49012e-08, 0.63232, -2.17823e-09, 0.367891, -4.10942, 4.76837e-06, -5.43694 )
+
+[node name="Rock13" parent="ground3" instance=ExtResource( 2 )]
+transform = Transform( 0.367891, 2.98023e-08, -0.63232, -1.49012e-08, 0.731555, 1.49012e-08, 0.63232, -2.17823e-09, 0.367891, -10.3611, 8.58307e-06, 0.346806 )
+
+[node name="Rock4" parent="ground3" instance=ExtResource( 2 )]
+transform = Transform( -0.415272, 0, -0.602264, 0, 0.731555, 0, 0.602264, 0, -0.415272, -3.97535, 0, 5.81124 )
+
+[node name="Rock5" parent="ground3" instance=ExtResource( 2 )]
+transform = Transform( 0.614326, 0, -0.103235, 0, 0.62294, 0, 0.103235, 0, 0.614326, -4.03561, -4.76837e-07, 4.15946 )
+
+[node name="Area" type="Area" parent="."]
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.899771, 4.76837e-07, 10.973 )
+collision_layer = 0
+script = ExtResource( 3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Area"]
+shape = SubResource( 7 )
+
+[node name="BT" parent="Area" instance=ExtResource( 4 )]
+editor/display_folded = true
+transform = Transform( -0.812179, 0, -0.583409, 0, 1, 0, 0.583409, 0, -0.812179, 2.31718, 0.784382, 0.799188 )
+
+[node name="BT2" parent="Area" instance=ExtResource( 4 )]
+transform = Transform( -0.94314, 0, -0.332396, 0, 1, 0, 0.332396, 0, -0.94314, 1.00374, 0.784382, 2.23739 )
+
+[node name="Line" parent="Area/BT2" index="0"]
+transform = Transform( 0.623331, -0.781958, -2.98023e-08, 0.40121, 0.319821, 0.858338, -0.671185, -0.535029, 0.513084, 0, 1.51833, 0 )
+
+[node name="BT3" parent="Area" instance=ExtResource( 4 )]
+transform = Transform( -0.895374, 0, 0.445315, 0, 1, 0, -0.445315, 0, -0.895374, -1.98772, 0.784382, 2.15435 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Area"]
+anims/show_bts = SubResource( 8 )
+
+[node name="Sam" parent="." instance=ExtResource( 5 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -14.194, 4.74812, -1.17053 )
+
+[node name="Graphics" parent="Sam" index="0"]
+editor/display_folded = true
+
+[node name="Backpack" parent="Sam/Graphics/Armature" index="0" instance=ExtResource( 6 )]
+visible = false
+
+[node name="FootStepPlayers" parent="Sam" index="4"]
+editor/display_folded = true
+
+[node name="Backpack" parent="Sam" instance=ExtResource( 6 )]
+transform = Transform( -1, 2.46091e-07, 5.06635e-08, 1.01327e-07, 0.579523, -0.814956, -2.29914e-07, -0.814956, -0.579523, -0.716058, 0.794963, -1.2409 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sam/Backpack"]
+autoplay = "spin"
+anims/spin = SubResource( 10 )
+
+[node name="Rain" type="Particles" parent="Sam"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1, 2.28, 2 )
+amount = 64
+visibility_aabb = AABB( -7.96705, -4, -12.2391, 15.9341, 8, 24.4783 )
+local_coords = false
+process_material = SubResource( 4 )
+draw_pass_1 = SubResource( 5 )
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Sam"]
+autoplay = "falldowncliff"
+anims/falldowncliff = SubResource( 9 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 3 )
+
+[node name="RainAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -9.088
+autoplay = true
+
+[editable path="Area/BT"]
+
+[editable path="Area/BT/Body"]
+
+[editable path="Area/BT2"]
+
+[editable path="Sam"]
+
+[editable path="Sam/Graphics"]

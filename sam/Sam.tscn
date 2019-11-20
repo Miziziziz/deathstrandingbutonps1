@@ -1,9 +1,12 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://sam/Sam.gd" type="Script" id=1]
 [ext_resource path="res://sam/sam.glb" type="PackedScene" id=2]
 [ext_resource path="res://sam/sam_body.tres" type="Material" id=3]
 [ext_resource path="res://sam/robotarmtrans.tres" type="Material" id=4]
+[ext_resource path="res://sam/leaves01.ogg" type="AudioStream" id=5]
+[ext_resource path="res://sam/leaves02.ogg" type="AudioStream" id=6]
+[ext_resource path="res://sam/robotaudio.ogg" type="AudioStream" id=7]
 
 [sub_resource type="Animation" id=1]
 resource_name = "robotarmoff"
@@ -47,7 +50,7 @@ tracks/2/keys = {
 }
 
 [sub_resource type="Animation" id=2]
-length = 0.4
+length = 0.2
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Graphics/Armature7/RobotArmHeadOpen:visible")
@@ -56,7 +59,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2 ),
+"times": PoolRealArray( 0, 0.1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ false, true ]
@@ -68,7 +71,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2 ),
+"times": PoolRealArray( 0, 0.1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ true, false ]
@@ -104,11 +107,9 @@ material/0 = ExtResource( 3 )
 material/0 = ExtResource( 3 )
 
 [node name="Hood" parent="Graphics/Armature4" index="0"]
-visible = false
 material/0 = ExtResource( 3 )
 
 [node name="RobotArm" parent="Graphics/Armature5" index="0"]
-visible = false
 material/0 = ExtResource( 3 )
 
 [node name="RobotArmHeadClosed" parent="Graphics/Armature6" index="0"]
@@ -116,14 +117,13 @@ visible = false
 material/0 = ExtResource( 4 )
 
 [node name="RobotArmHeadOpen" parent="Graphics/Armature7" index="0"]
-visible = false
 material/0 = ExtResource( 4 )
 
 [node name="Sam" parent="Graphics/Armature8" index="0"]
 material/0 = ExtResource( 3 )
 
 [node name="AnimationPlayer" parent="Graphics" index="9"]
-autoplay = "stand_loop"
+autoplay = "fall_loop"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "robotarmoff"
@@ -135,10 +135,25 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1, 0
 shape = SubResource( 3 )
 
 [node name="CamBase" type="Spatial" parent="."]
+editor/display_folded = true
 transform = Transform( 0.825301, 0.38203, -0.41585, 0, 0.736418, 0.676527, 0.564693, -0.558339, 0.607766, 0, 1, 0 )
 
 [node name="Camera" type="Camera" parent="CamBase"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6 )
+transform = Transform( 1, 3.8743e-07, 2.38419e-07, 0, 0.999999, 1.19209e-07, 2.98023e-08, -2.38419e-07, 1, 1.63913e-07, -2.98023e-07, 5 )
 current = true
+
+[node name="FootStepPlayers" type="Spatial" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="FootStepPlayers"]
+stream = ExtResource( 5 )
+volume_db = 5.0
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="FootStepPlayers"]
+stream = ExtResource( 6 )
+volume_db = 5.0
+
+[node name="RobotAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -10.0
 
 [editable path="Graphics"]
