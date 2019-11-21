@@ -132,6 +132,7 @@ anims/robotarmon = SubResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1, 0 )
+visible = false
 shape = SubResource( 3 )
 
 [node name="CamBase" type="Spatial" parent="."]

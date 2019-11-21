@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Ground.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Rock.tscn" type="PackedScene" id=2]
@@ -8,12 +8,108 @@
 [ext_resource path="res://sam/Backpack.tscn" type="PackedScene" id=6]
 [ext_resource path="res://sam/Light_Rain.ogg" type="AudioStream" id=7]
 
-[sub_resource type="SphereShape" id=7]
+[sub_resource type="SphereShape" id=1]
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=2]
 resource_name = "show_bts"
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="ParticlesMaterial" id=4]
+emission_shape = 2
+emission_box_extents = Vector3( 10, 10, 1 )
+spread = 0.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 20.0
+
+[sub_resource type="SpatialMaterial" id=5]
+params_billboard_mode = 2
+albedo_color = Color( 0.356863, 0.419608, 0.486275, 1 )
+
+[sub_resource type="PlaneMesh" id=6]
+material = SubResource( 5 )
+size = Vector2( 0.07, 0.7 )
+
+[sub_resource type="Animation" id=11]
+resource_name = "robotarmoff"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Graphics/Armature5/RobotArm:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Graphics/Armature6/RobotArmHeadClosed:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Graphics/Armature7/RobotArmHeadOpen:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=12]
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Graphics/Armature7/RobotArmHeadOpen:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Graphics/Armature6/RobotArmHeadClosed:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Graphics/Armature5/RobotArm:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=8]
 resource_name = "spin"
 length = 2.0
 loop = true
@@ -29,22 +125,6 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Vector3( 54.583, -180, 0 ), Vector3( 54.583, -180, 360 ) ]
 }
-
-[sub_resource type="ParticlesMaterial" id=4]
-emission_shape = 2
-emission_box_extents = Vector3( 10, 10, 1 )
-spread = 0.0
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 20.0
-angular_velocity = 0.0
-
-[sub_resource type="SpatialMaterial" id=6]
-params_billboard_mode = 2
-albedo_color = Color( 0.356863, 0.419608, 0.486275, 1 )
-
-[sub_resource type="PlaneMesh" id=5]
-material = SubResource( 6 )
-size = Vector2( 0.07, 0.7 )
 
 [sub_resource type="Animation" id=9]
 resource_name = "falldowncliff"
@@ -62,7 +142,7 @@ tracks/0/keys = {
 "values": [ Vector3( -14.194, 4.74812, -1.17053 ), Vector3( -54.756, -14.3168, -1.171 ) ]
 }
 
-[sub_resource type="Environment" id=3]
+[sub_resource type="Environment" id=10]
 background_mode = 1
 background_color = Color( 0.627451, 0.686275, 0.745098, 1 )
 ambient_light_color = Color( 1, 1, 1, 1 )
@@ -324,7 +404,7 @@ collision_layer = 0
 script = ExtResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
-shape = SubResource( 7 )
+shape = SubResource( 1 )
 
 [node name="BT" parent="Area" instance=ExtResource( 4 )]
 editor/display_folded = true
@@ -340,26 +420,28 @@ transform = Transform( 0.623331, -0.781958, -2.98023e-08, 0.40121, 0.319821, 0.8
 transform = Transform( -0.895374, 0, 0.445315, 0, 1, 0, -0.445315, 0, -0.895374, -1.98772, 0.784382, 2.15435 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Area"]
-anims/show_bts = SubResource( 8 )
+anims/show_bts = SubResource( 2 )
 
 [node name="Sam" parent="." instance=ExtResource( 5 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -14.194, 4.74812, -1.17053 )
-
-[node name="Graphics" parent="Sam" index="0"]
-editor/display_folded = true
+transform = Transform( 1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, -4.194, 0, -1.171 )
 
 [node name="Backpack" parent="Sam/Graphics/Armature" index="0" instance=ExtResource( 6 )]
 visible = false
 
+[node name="RobotArm" parent="Sam/Graphics/Armature5" index="0"]
+visible = false
+
+[node name="RobotArmHeadOpen" parent="Sam/Graphics/Armature7" index="0"]
+visible = false
+
+[node name="AnimationPlayer" parent="Sam/Graphics" index="9"]
+autoplay = "stand_loop"
+
+[node name="CamBase" parent="Sam" index="3"]
+editor/display_folded = false
+
 [node name="FootStepPlayers" parent="Sam" index="4"]
 editor/display_folded = true
-
-[node name="Backpack" parent="Sam" instance=ExtResource( 6 )]
-transform = Transform( -1, 2.46091e-07, 5.06635e-08, 1.01327e-07, 0.579523, -0.814956, -2.29914e-07, -0.814956, -0.579523, -0.716058, 0.794963, -1.2409 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Sam/Backpack"]
-autoplay = "spin"
-anims/spin = SubResource( 10 )
 
 [node name="Rain" type="Particles" parent="Sam"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1, 2.28, 2 )
@@ -367,14 +449,50 @@ amount = 64
 visibility_aabb = AABB( -7.96705, -4, -12.2391, 15.9341, 8, 24.4783 )
 local_coords = false
 process_material = SubResource( 4 )
-draw_pass_1 = SubResource( 5 )
+draw_pass_1 = SubResource( 6 )
 
-[node name="AnimationPlayer2" type="AnimationPlayer" parent="Sam"]
+[node name="Sam2" parent="." instance=ExtResource( 5 )]
+editor/display_folded = true
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -14.194, 4.74812, -1.17053 )
+disabled = true
+
+[node name="Graphics" parent="Sam2" index="0"]
+editor/display_folded = true
+
+[node name="AnimationPlayer" parent="Sam2" index="1"]
+anims/robotarmoff = SubResource( 11 )
+anims/robotarmon = SubResource( 12 )
+
+[node name="CamBase" parent="Sam2" index="3"]
+editor/display_folded = false
+
+[node name="Camera" parent="Sam2/CamBase" index="0"]
+current = false
+
+[node name="FootStepPlayers" parent="Sam2" index="4"]
+editor/display_folded = true
+
+[node name="Backpack" parent="Sam2" instance=ExtResource( 6 )]
+transform = Transform( -1, 2.46091e-07, 5.06635e-08, 1.01327e-07, 0.579523, -0.814956, -2.29914e-07, -0.814956, -0.579523, -0.716058, 0.794963, -1.2409 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sam2/Backpack"]
+autoplay = "spin"
+anims/spin = SubResource( 8 )
+
+[node name="Rain" type="Particles" parent="Sam2"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1, 2.28, 2 )
+amount = 64
+visibility_aabb = AABB( -7.96705, -4, -12.2391, 15.9341, 8, 24.4783 )
+local_coords = false
+process_material = SubResource( 4 )
+draw_pass_1 = SubResource( 6 )
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Sam2"]
 autoplay = "falldowncliff"
 anims/falldowncliff = SubResource( 9 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 3 )
+environment = SubResource( 10 )
 
 [node name="RainAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
@@ -390,3 +508,5 @@ autoplay = true
 [editable path="Sam"]
 
 [editable path="Sam/Graphics"]
+
+[editable path="Sam2"]
